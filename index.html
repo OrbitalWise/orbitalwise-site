@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="AI agents that do real jobs in your business, built from the inside. Orbitalwise comes into your business, learns how it actually runs, and builds agents with a clear job, a memory of every call, email and meeting, and a person who approves their work.">
+<meta property="og:title" content="Orbitalwise">
+<meta property="og:description" content="AI agents that do real jobs in your business. Built from the inside.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='none' stroke='%231A5CE6' stroke-width='4'/%3E%3Ccircle cx='32' cy='32' r='9' fill='%231A5CE6'/%3E%3Ccircle cx='54' cy='18' r='5' fill='%23F28C28'/%3E%3C/svg%3E">
+<title>Orbitalwise</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+</head>
+<body>
+<style>
+:root{
+  --bg:#F5F8FC; --bg2:#FFFFFF; --ink:#0E1B2E; --ink-2:#3F4C5E; --muted:#6B7889; --line:#DCE3EC;
+  --blue:#1A5CE6; --blue-ink:#FFFFFF; --blue-soft:#E7EEFC; --orange:#F28C28; --green:#1E9E5A; --red:#D8432B;
+  --card:#FFFFFF; --grad1:#E6F0FF; --grad2:#F8F3EC; --star:rgba(26,92,230,.55); --link:rgba(26,92,230,.16);
+  --body:"Inter","Helvetica Neue",Arial,system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0B1220; --bg2:#101a2c; --ink:#EAF0F8; --ink-2:#B9C5D6; --muted:#8696AB; --line:#223049;
+    --blue:#4E86FF; --blue-ink:#07132A; --blue-soft:#15264A; --orange:#F5A356; --green:#4CCB86; --red:#FF7A5C;
+    --card:#131E33; --grad1:#10203F; --grad2:#1A1A2A; --star:rgba(120,165,255,.55); --link:rgba(120,165,255,.14);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0B1220; --bg2:#101a2c; --ink:#EAF0F8; --ink-2:#B9C5D6; --muted:#8696AB; --line:#223049;
+  --blue:#4E86FF; --blue-ink:#07132A; --blue-soft:#15264A; --orange:#F5A356; --green:#4CCB86; --red:#FF7A5C;
+  --card:#131E33; --grad1:#10203F; --grad2:#1A1A2A; --star:rgba(120,165,255,.55); --link:rgba(120,165,255,.14);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);background-image:radial-gradient(ellipse at 10% 0%,var(--grad1),transparent 55%),radial-gradient(ellipse at 100% 100%,var(--grad2),transparent 50%);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+#sky{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:24px;position:relative;z-index:1}
+@media (max-width:520px){.wrap{padding-inline:16px}}
+a{color:inherit}
+p{margin:0}
+h1,h2,h3{margin:0;letter-spacing:-.025em;line-height:1.1;text-wrap:balance}
+h2{font-size:clamp(28px,4vw,42px);font-weight:800}
+h3{font-size:18px;font-weight:700;letter-spacing:-.01em}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--orange);box-shadow:0 0 0 3px rgba(242,140,40,.18)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--body);font-weight:600;font-size:15.5px;padding:13px 22px;border-radius:999px;text-decoration:none;border:1px solid var(--line);background:var(--card);color:var(--ink);transition:transform .15s,box-shadow .15s;cursor:pointer}
+.btn:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(14,27,46,.10)}
+.btn.primary{background:var(--blue);color:var(--blue-ink);border-color:transparent;box-shadow:0 8px 20px rgba(26,92,230,.28)}
+.btn:focus-visible,a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+
+header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;height:68px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand .mark{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--blue);display:grid;place-items:center;position:relative}
+.brand .mark::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--blue)}
+.brand .mark::after{content:"";position:absolute;inset:-1.5px;border-radius:50%;border:1.5px solid transparent;border-top-color:var(--orange);animation:spin 6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.brand b{font-family:var(--mono);font-size:14.5px;letter-spacing:.26em;color:var(--ink);font-weight:500}
+.nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0;font-size:15px;color:var(--ink-2)}
+.nav ul a{text-decoration:none}
+.nav ul a:hover{color:var(--blue)}
+.nav .right{display:flex;align-items:center;gap:10px}
+.nav .btn{padding:9px 16px;font-size:14.5px}
+.toggle{width:40px;height:40px;border-radius:999px;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;cursor:pointer;color:var(--ink)}
+.toggle svg{width:16px;height:16px}
+@media (max-width:860px){.nav ul{display:none}}
+@media (prefers-reduced-motion:reduce){.brand .mark::after{animation:none}html{scroll-behavior:auto}}
+
+.hero{padding-block:72px 52px}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(36px,5.3vw,60px);font-weight:800;line-height:1.04}
+.hero h1 span{color:var(--blue)}
+.hero .lede{font-size:19px;color:var(--ink-2);max-width:30em;margin-top:22px}
+.hero .acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.change{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 30px 60px rgba(14,27,46,.14);overflow:hidden;justify-self:center;width:100%;max-width:520px;font-size:14.5px}
+.change .bar{display:grid;grid-template-columns:1fr 1fr;padding:12px 18px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.change .bar b{font-weight:500;color:var(--blue)}
+.change .row{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line)}
+.change .row:last-child{border-bottom:0}
+.change .row span{padding:13px 18px;color:var(--muted);line-height:1.45;border-right:1px solid var(--line)}
+.change .row b{padding:13px 18px;font-weight:600;color:var(--ink);line-height:1.45;background:color-mix(in srgb,var(--blue-soft) 55%,transparent);position:relative}
+.change .row b::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:9px;vertical-align:2px}
+@media (max-width:420px){.change{font-size:13.5px}.change .row span,.change .row b,.change .bar{padding-inline:14px}}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr}.hero{padding-block:48px 40px}}
+
+.strip{display:grid;grid-template-columns:repeat(4,1fr);background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 20px 50px rgba(14,27,46,.08);overflow:hidden}
+.strip div{padding:20px 22px;border-left:1px solid var(--line)}
+.strip div:first-child{border-left:0}
+.strip b{display:block;font-family:var(--mono);font-size:28px;font-weight:500;color:var(--ink);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.strip span{display:block;font-size:14px;color:var(--ink-2);margin-top:4px}
+@media (max-width:860px){.strip{grid-template-columns:1fr 1fr}.strip div:nth-child(3){border-left:0}.strip div:nth-child(n+3){border-top:1px solid var(--line)}}
+@media (max-width:480px){.strip{grid-template-columns:1fr}.strip div{border-left:0;border-top:1px solid var(--line)}.strip div:first-child{border-top:0}}
+
+section.blk{padding-block:84px}
+@media (max-width:640px){section.blk{padding-block:56px}}
+.head{display:grid;gap:12px;max-width:760px;margin-bottom:34px;justify-items:start}
+.head p{font-size:18px;color:var(--ink-2)}
+
+.pains{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pain{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;box-shadow:0 14px 40px rgba(14,27,46,.06);display:grid;gap:8px;align-content:start}
+.pain h3{font-size:21px}
+.pain p{color:var(--ink-2);font-size:15.5px}
+@media (max-width:760px){.pains{grid-template-columns:1fr}}
+.fact{max-width:760px;margin-top:22px;background:var(--blue-soft);border:1px solid color-mix(in srgb,var(--blue) 25%,transparent);border-radius:14px;padding:18px 22px;font-size:17px;font-weight:600}
+.fact small{display:block;font-weight:400;font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:8px;letter-spacing:.02em}
+
+.why{max-width:760px;font-size:18px;color:var(--ink-2);margin-bottom:26px}
+.why b{color:var(--ink)}
+.team{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.person{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;display:grid;gap:8px;align-content:start;box-shadow:0 14px 40px rgba(14,27,46,.06)}
+.av{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-size:14px;color:var(--ink);position:relative;isolation:isolate;margin-bottom:4px}
+.av::before{content:"";position:absolute;inset:-2px;border-radius:50%;background:conic-gradient(var(--blue),var(--orange),var(--blue));z-index:-1}
+.av::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--card);z-index:-1}
+.person h3{font-size:19px}
+.person .role{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue)}
+.person p{color:var(--ink-2);font-size:15px}
+@media (max-width:860px){.team{grid-template-columns:1fr}}
+.promises{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+.promises div{background:var(--blue-soft);border:1px solid color-mix(in srgb,var(--blue) 22%,transparent);border-radius:14px;padding:18px 20px;font-size:16px;font-weight:600}
+@media (max-width:720px){.promises{grid-template-columns:1fr}}
+
+.steps{display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;display:grid;gap:10px;align-content:start;box-shadow:0 14px 40px rgba(14,27,46,.06)}
+.step .when{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
+.step h3{font-size:22px}
+.step p{color:var(--ink-2);font-size:15.5px}
+.step .keep{border-top:1px solid var(--line);padding-top:10px;font-size:14.5px;color:var(--ink)}
+.step .keep b{color:var(--green);font-weight:600}
+@media (max-width:860px){.steps{grid-template-columns:1fr}}
+.price{margin-top:22px;font-family:var(--mono);font-size:13px;color:var(--muted);letter-spacing:.02em}
+.price::before{content:"→ ";color:var(--blue)}
+
+.cases{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.case{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;display:grid;gap:8px;align-content:start;box-shadow:0 14px 40px rgba(14,27,46,.06)}
+.case .who{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.case h3{font-size:19px}
+.case p{color:var(--ink-2);font-size:15.5px}
+.case .goal{border-top:1px solid var(--line);padding-top:10px;font-size:14.5px}
+.case .goal b{color:var(--blue);font-weight:600}
+@media (max-width:760px){.cases{grid-template-columns:1fr}}
+
+.book{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:52px 48px;box-shadow:0 30px 70px rgba(14,27,46,.10);display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;position:relative;overflow:hidden}
+.book::before{content:"";position:absolute;width:560px;height:560px;border-radius:50%;border:1px solid color-mix(in srgb,var(--blue) 22%,transparent);left:-180px;top:-200px;pointer-events:none}
+.book::after{content:"";position:absolute;width:360px;height:360px;border-radius:50%;border:1px dashed color-mix(in srgb,var(--blue) 30%,transparent);left:-80px;top:-100px;pointer-events:none}
+.book > *{position:relative}
+.book p.l{font-size:18px;color:var(--ink-2);margin-top:14px}
+.book .small{margin-top:18px;font-family:var(--mono);font-size:12.5px;color:var(--muted);line-height:1.7}
+form.req{display:grid;gap:12px}
+form.req label{display:grid;gap:6px;font-size:13.5px;font-weight:600;color:var(--ink-2)}
+form.req input,form.req textarea{font:inherit;font-size:15.5px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--bg2);color:var(--ink);width:100%}
+form.req textarea{min-height:92px;resize:vertical}
+form.req .btn{width:100%}
+.thanks{display:grid;gap:8px;padding:26px;border:1px solid var(--line);border-radius:14px;background:var(--blue-soft)}
+.thanks b{font-size:18px}
+.email{font-family:var(--mono);font-size:14px;user-select:all}
+@media (max-width:860px){.book{grid-template-columns:1fr;padding:32px 22px}}
+
+footer{padding-block:40px 64px;color:var(--muted);font-size:13px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;align-items:center;font-family:var(--mono);letter-spacing:.03em}
+</style>
+
+<canvas id="sky" aria-hidden="true"></canvas>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Orbitalwise home"><span class="mark" aria-hidden="true"></span><b>ORBITALWISE</b></a>
+    <ul>
+      <li><a href="#problem">The problem</a></li>
+      <li><a href="#why">Who we are</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#proof">Our work</a></li>
+    </ul>
+    <div class="right">
+      <button class="toggle" id="toggle" type="button" aria-label="Switch light or dark mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <a class="btn primary" href="#book">Request a call</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">The AI front office, built inside your business</span>
+      <h1 style="margin-top:18px">AI agents that do real jobs in your business. <span>Built from the inside.</span></h1>
+      <p class="lede">Most AI rollouts stall because nobody owned the setup, nobody trusted the data, and the AI never had a real job. We come into your business, learn how it actually runs, and build agents with a clear job, a memory of every call, email and meeting, and a person who approves their work. Then we stay until your team runs it without us.</p>
+      <div class="acts">
+        <a class="btn primary" href="#book">Request a call</a>
+        <a class="btn" href="#how">How it works</a>
+      </div>
+    </div>
+    <div class="change" role="img" aria-label="What changes. Today, a lead comes in and someone sees it tomorrow; with Orbitalwise, an agent answers and routes it within the hour and a rep approves the reply. Today, notes live in people's heads; with Orbitalwise, every call, email and meeting lands in one shared memory. Today, follow-up depends on who remembers; with Orbitalwise, agents flag quiet deals and draft the next step. Today, the CRM is a week behind; with Orbitalwise, deal stages move as the conversations happen.">
+      <div class="bar"><span>Today</span><b>With Orbitalwise</b></div>
+      <div class="row"><span>A lead comes in. Someone sees it tomorrow.</span><b>An agent answers and routes it within the hour. A rep approves the reply.</b></div>
+      <div class="row"><span>Notes live in people's heads.</span><b>Every call, email and meeting lands in one shared memory.</b></div>
+      <div class="row"><span>Follow-up depends on who remembers.</span><b>Agents flag quiet deals and draft the next step.</b></div>
+      <div class="row"><span>The CRM is a week behind.</span><b>Deal stages move as the conversations happen.</b></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="strip">
+    <div><b data-count="13" data-suffix="+">13+</b><span>years at HubSpot between the founders</span></div>
+    <div><b data-count="80" data-suffix="+">80+</b><span>agencies Austin supported there</span></div>
+    <div><b data-count="100" data-suffix="M">100M</b><span>organic views Jacob personally pushed in 90 days</span></div>
+    <div><b data-count="1">1</b><span>person to call, start to finish</span></div>
+  </div>
+</div>
+
+<section class="blk" id="problem">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">The problem</span>
+      <h2>You know AI belongs in the business. Here's why it hasn't happened yet.</h2>
+      <p>Four things we hear from almost every owner.</p>
+    </div>
+    <div class="pains">
+      <div class="pain"><h3>"Every week there's a new tool. So we wait."</h3><p>Thousands of vendors now sell something called an agent, and you can't tell which ones are real. So the decision slides to next quarter, and the business keeps running on what's in people's heads.</p></div>
+      <div class="pain"><h3>"We bought something. Nobody ever really used it."</h3><p>It didn't know your customers. Nobody owned it. It never had a job. So the team went back to doing it by hand, and the tool sat there in the background.</p></div>
+      <div class="pain"><h3>"The important stuff lives in people's heads."</h3><p>Who said what, what's next, why the deal stalled. It's in inboxes and memory. Your CRM is only as accurate as the last person who remembered to update it.</p></div>
+      <div class="pain"><h3>"Leads don't get lost. They get forgotten."</h3><p>A form comes in. Someone reads it tomorrow. Nobody owns the next step, so there isn't one, and you find out on Monday.</p></div>
+    </div>
+    <p class="fact">Six out of ten leaders say their company has no plan for AI. Most AI projects that do start never spread past the pilot, and the pattern is the same every time: nobody owned the setup, nobody trusted the data, and the AI never had a real job. That's the part we do.<small>Microsoft and LinkedIn, 31,000 people, 2024 · MIT, 300 company AI projects, 2025</small></p>
+  </div>
+</section>
+
+<section class="blk" id="why" style="padding-top:0">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Who we are</span>
+      <h2>We've done the jobs we automate.</h2>
+    </div>
+    <p class="why">Most AI vendors have never worked a lead list, run a sales team or sat through a Monday meeting. We have, and we spent <b>thirteen years inside HubSpot</b> building the systems companies run on.</p>
+    <div class="team">
+      <div class="person"><div class="av">AG</div><h3>Austin Gentile</h3><span class="role">Account management</span><p>Five years at HubSpot, two and a half at CrowdStrike. Your one call, start to finish.</p></div>
+      <div class="person"><div class="av">JJ</div><h3>Jacob Jefferson</h3><span class="role">Sales and strategy</span><p>Ran a social media agency. Personally pushed 100 million organic views in 90 days. Decides which jobs we hand off first, and where your customers should be hearing from you.</p></div>
+      <div class="person"><div class="av">GS</div><h3>Gyasi Slaughter</h3><span class="role">Technical lead</span><p>Eight and a half years at HubSpot. Owns the build, the integrations and the rules the agents run under.</p></div>
+    </div>
+    <div class="promises">
+      <div>An agent sees only what its owner sees.</div>
+      <div>It suggests before it acts, until your team says it's earned it.</div>
+      <div>Every note, update and draft links back to the call or email it came from.</div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="how" style="padding-top:0">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">How it works</span>
+      <h2>We learn your business before we change it.</h2>
+      <p>Nobody can tell you what to automate from a demo. We find out by doing the work with your team.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><span class="when">Step 1</span><h3>The Deep Dive</h3><p>We embed with your team and learn how the business actually runs, not just the part you think needs AI. We sit in on the calls, do the job ourselves where that's the only way to understand it, and review every tool you already pay for. You come out with one map of how work moves through your company and the first jobs to hand to an agent, in order.</p><p class="keep"><b>That map is yours</b> whether or not we go further.</p></div>
+      <div class="step"><span class="when">Step 2</span><h3>The Build</h3><p>One job at a time. Each agent gets a name, a clear job and a person who approves its work. It runs on a shared memory of every call, email and meeting, connected to the tools you already use. Privacy is set before anything connects, and you own the workspace and everything in it.</p></div>
+      <div class="step"><span class="when">Step 3</span><h3>The Run</h3><p>We stay. We watch what the agents do, fix what breaks, train your team to correct them without us, and report what changed in plain language. When it runs without us, keep us on or run it yourself.</p></div>
+    </div>
+    <p class="price">One price for all three steps. Quoted after the first call.</p>
+  </div>
+</section>
+
+<section class="blk" id="proof" style="padding-top:0">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Our work</span>
+      <h2>Work we've done inside other people's companies.</h2>
+      <p>Names stay private. The work doesn't.</p>
+    </div>
+    <div class="cases">
+      <div class="case"><span class="who">Healthcare staffing</span><h3>More demand than the team could fill</h3><p>We took a recruiter's seat before building anything. Mapped first lead to first shift, built the daily call lists and call capture with their developer, cut onboarding to what the state actually requires, and launched a campaign that feeds it.</p><p class="goal"><b>Target:</b> one recruiter doing the work of five.</p></div>
+      <div class="case"><span class="who">Contractor, four states</span><h3>Leads arriving by email, nobody owning them</h3><p>Built routing across about 65,000 contacts so every lead lands with the rep who owns the territory, designed automated intake, and wrote a field guide the veteran reps actually use.</p><p class="goal"><b>Target:</b> every lead reaches the right rep without a forward.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="book" style="padding-top:0">
+  <div class="wrap">
+    <div class="book">
+      <div>
+        <span class="eyebrow">Request a call</span>
+        <h2 style="margin-top:14px">Tell us how your business runs today.</h2>
+        <p class="l">Send the one job you'd hand to an agent tomorrow. Austin reads every request and replies within a business day.</p>
+        <p class="small">We take on a few companies at a time.<br>Prefer email? <span class="email" id="email">hello@orbitalwise.com</span></p>
+      </div>
+      <form class="req" id="req" name="request" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="request">
+        <p hidden><label>Leave this empty <input name="bot-field"></label></p>
+        <label>Name and company<input id="f-name" name="name" type="text" required autocomplete="organization"></label>
+        <label>Email<input id="f-email" name="email" type="email" required autocomplete="email"></label>
+        <label>The one job you'd hand off tomorrow<textarea id="f-job" name="job" required></textarea></label>
+        <button class="btn primary" type="submit">Request a call</button>
+      </form>
+      <div class="thanks" id="thanks" hidden><b>Got it.</b><p>Austin will read it and reply within a business day.</p></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Orbitalwise · Formerly Orbital HubSpot Partners</span>
+    <span>hello@orbitalwise.com</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  try{var saved=localStorage.getItem('orbitalwise-theme'); if(saved) root.setAttribute('data-theme',saved);}catch(e){}
+  document.getElementById('toggle').addEventListener('click',function(){
+    var dark=root.getAttribute('data-theme')==='dark' || (!root.getAttribute('data-theme') && matchMedia('(prefers-color-scheme: dark)').matches);
+    var next=dark?'light':'dark'; root.setAttribute('data-theme',next);
+    try{localStorage.setItem('orbitalwise-theme',next);}catch(e){}
+  });
+
+  var c=document.getElementById('sky'),ctx=c.getContext('2d'),pts=[],reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function size(){c.width=innerWidth*devicePixelRatio;c.height=innerHeight*devicePixelRatio;ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+    pts=[];var n=Math.round(innerWidth*innerHeight/26000);for(var i=0;i<n;i++)pts.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.12,vy:(Math.random()-.5)*.12,r:Math.random()*1.4+.6});}
+  function col(v){return getComputedStyle(root).getPropertyValue(v).trim();}
+  function draw(){ctx.clearRect(0,0,innerWidth,innerHeight);var star=col('--star'),link=col('--link');
+    for(var i=0;i<pts.length;i++){var p=pts[i];if(!reduce){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>innerWidth)p.vx*=-1;if(p.y<0||p.y>innerHeight)p.vy*=-1;}
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.283);ctx.fillStyle=star;ctx.fill();
+      for(var j=i+1;j<pts.length;j++){var q=pts[j],dx=p.x-q.x,dy=p.y-q.y,d=dx*dx+dy*dy;if(d<15000){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.strokeStyle=link;ctx.lineWidth=.8;ctx.stroke();}}}
+    if(!reduce)requestAnimationFrame(draw);}
+  size();draw();addEventListener('resize',function(){size();if(reduce)draw();});
+
+  if(!reduce && 'IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;var el=e.target,end=parseFloat(el.dataset.count),suf=el.dataset.suffix||'',t0=null;
+      function step(t){if(!t0)t0=t;var k=Math.min(1,(t-t0)/900);k=1-Math.pow(1-k,3);el.textContent=Math.round(end*k)+suf;if(k<1)requestAnimationFrame(step);}
+      requestAnimationFrame(step);io.unobserve(el);});},{threshold:.5});
+    document.querySelectorAll('[data-count]').forEach(function(el){io.observe(el);});
+  }
+
+  var f=document.getElementById('req');
+  f.addEventListener('submit',function(ev){ev.preventDefault();var data=new URLSearchParams(new FormData(f)).toString();
+    function done(){f.hidden=true;document.getElementById('thanks').hidden=false;}
+    fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:data}).then(done,done);});
+})();
+</script>
+
+</body>
+</html>
