@@ -234,7 +234,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;
     </ul>
     <div class="right">
       <button class="toggle" id="toggle" type="button" aria-label="Switch light or dark mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
-      <a class="btn primary" href="#book">Request a call</a>
+      <a class="btn primary" href="#book">Book a call</a>
     </div>
   </div>
 </header>
@@ -247,7 +247,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;
       <h1 style="margin-top:18px">AI agents that do real jobs in your business. <span>Built from the inside.</span></h1>
       <p class="lede">Most AI rollouts stall because nobody owned the setup, nobody trusted the data, and the AI never had a real job. We come into your business, learn how it actually runs, and build agents with a clear job, a memory of every call, email and meeting, and a person who approves their work. Then we stay until your team runs it without us.</p>
       <div class="acts">
-        <a class="btn primary" href="#book">Request a call</a>
+        <a class="btn primary" href="#book">Book a call</a>
         <a class="btn" href="#how">How it works</a>
       </div>
     </div>
@@ -341,20 +341,15 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;
   <div class="wrap">
     <div class="book">
       <div>
-        <span class="eyebrow">Request a call</span>
+        <span class="eyebrow">Book a call</span>
         <h2 style="margin-top:14px">Tell us how your business runs today.</h2>
-        <p class="l">Send the one job you'd hand to an agent tomorrow. Austin reads every request and replies within a business day.</p>
+        <p class="l">Thirty minutes to walk through the one job you'd hand to an agent tomorrow, and what it would take to build it.</p>
         <p class="small">We take on a few companies at a time.<br>Prefer email? <span class="email" id="email">hello@orbitalwise.com</span></p>
       </div>
-      <form class="req" id="req" name="request" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-        <input type="hidden" name="form-name" value="request">
-        <p hidden><label>Leave this empty <input name="bot-field"></label></p>
-        <label>Name and company<input id="f-name" name="name" type="text" required autocomplete="organization"></label>
-        <label>Email<input id="f-email" name="email" type="email" required autocomplete="email"></label>
-        <label>The one job you'd hand off tomorrow<textarea id="f-job" name="job" required></textarea></label>
-        <button class="btn primary" type="submit">Request a call</button>
-      </form>
-      <div class="thanks" id="thanks" hidden><b>Got it.</b><p>Austin will read it and reply within a business day.</p></div>
+      <div class="req">
+        <p class="l">Pick a time and it goes straight on the calendar. Thirty minutes, no phone tag, no waiting on a reply.</p>
+        <a class="btn primary" href="https://calendly.com/orbitalwise/30min">Book a 30-minute call</a>
+      </div>
     </div>
   </div>
 </section>
@@ -395,10 +390,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;
     document.querySelectorAll('[data-count]').forEach(function(el){io.observe(el);});
   }
 
-  var f=document.getElementById('req');
-  f.addEventListener('submit',function(ev){ev.preventDefault();var data=new URLSearchParams(new FormData(f)).toString();
-    function done(){f.hidden=true;document.getElementById('thanks').hidden=false;}
-    fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:data}).then(done,done);});
+
 })();
 </script>
 
